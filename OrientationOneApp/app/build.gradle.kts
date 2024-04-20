@@ -48,6 +48,8 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+
 }
 
 dependencies {
@@ -59,16 +61,23 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     // Room database dependencies
-    implementation("androidx.room:room-runtime:2.4.0")
-    implementation("androidx.room:room-ktx:2.4.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
 
 // Room database compiler (for Kotlin)
-    kapt("androidx.room:room-compiler:2.4.0")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation ("androidx.appcompat:appcompat:1.4.0")
 
-// Room database testing utilities (optional)
-    testImplementation("androidx.room:room-testing:2.4.0")
-    androidTestImplementation("androidx.room:room-testing:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+
+    implementation("androidx.compose.ui:ui:1.0.5")
+    implementation("androidx.compose.runtime:runtime-livedata:1.0.5")
+
+
 
     implementation("androidx.activity:activity-compose:1.4.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07")
