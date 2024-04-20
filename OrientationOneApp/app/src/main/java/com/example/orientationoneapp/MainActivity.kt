@@ -13,10 +13,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.orientationoneapp.model.OrientationDao
 import com.example.orientationoneapp.model.OrientationDatabase
+import com.example.orientationoneapp.model.convertDataToTextFormat
+import com.example.orientationoneapp.model.writeDataToFile
 import com.example.orientationoneapp.screens.OrientationDisplay
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,5 +50,25 @@ fun OrientationApp() {
         Button(onClick = { context.startActivity(Intent(context, DataActivity::class.java)) }) {
             Text(text = "Show Graph")
         }
+        ExportButton(database.orientationDao())
+    }
+}
+
+
+@Composable
+fun ExportButton(orientationDao: OrientationDao) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    Button(
+        onClick = {
+            lifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                val orientationDataList = orientationDao.get500OrientationData().toList()
+                val textData = convertDataToTextFormat(orientationDataList)
+                writeDataToFile(context, textData, "orientation_data.txt")
+            }
+        }
+    ) {
+        Text("Export Data")
     }
 }

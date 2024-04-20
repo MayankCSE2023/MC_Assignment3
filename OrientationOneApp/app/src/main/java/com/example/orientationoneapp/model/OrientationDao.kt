@@ -12,4 +12,7 @@ interface OrientationDao {
 
     @Query("SELECT * FROM orientation_data ORDER BY timestamp DESC")
     fun getAllOrientationData(): LiveData<List<OrientationData>>
+
+    @Query("SELECT * FROM orientation_data ORDER BY id ASC LIMIT 500")
+    fun get500OrientationData(): List<OrientationData>
 }

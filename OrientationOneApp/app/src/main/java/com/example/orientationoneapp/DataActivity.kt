@@ -1,7 +1,10 @@
 package com.example.orientationoneapp
 
+import android.content.ContentValues
+import android.content.Context
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
@@ -11,19 +14,30 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.graphics.Path
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.lifecycleScope
 import com.example.orientationoneapp.model.OrientationDao
 import com.example.orientationoneapp.model.OrientationData
+import com.example.orientationoneapp.model.convertDataToTextFormat
+import com.example.orientationoneapp.model.getOrientationDataFromDatabase
+import com.example.orientationoneapp.model.writeDataToFile
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.IOException
 
@@ -123,56 +137,4 @@ private fun DrawScope.drawLineGraph(
     )
 
 }
-
-//fun exportOrientationDataToFile(orientationDao: OrientationDao) {
-//    // Retrieve the orientation data from the database
-//    val orientationDataList = orientationDao.getAllOrientationData()
-//
-//    // Convert the orientation data into a text format
-//    val textData = buildString {
-//        orientationDataList.forEach { data ->
-//            append("${data.id},${data.timestamp},${data.roll},${data.pitch},${data.yaw}\n")
-//        }
-//    }
-//
-//    // Write the text data to a file on external storage
-//    try {
-//        val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-//        val file = File(directory, "orientation_data.txt")
-//        file.writeText(textData)
-//        // Success message
-//        println("Orientation data exported successfully to: ${file.absolutePath}")
-//    } catch (e: IOException) {
-//        // Error message
-//        println("Error exporting orientation data: ${e.message}")
-//    }
-//}
-
-//@Composable
-//fun DataDisplay(orientationDao: OrientationDao) {
-//    val orientationDataList by orientationDao.getAllOrientationData().observeAsState(emptyList())
-//
-//    Column {
-//        Text(
-//            text = "Orientation Data List",
-//            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
-//        )
-//        if (orientationDataList.isEmpty()) {
-//            Text(text = "No data available")
-//        } else {
-//
-//            LazyColumn {
-//                itemsIndexed(orientationDataList) { index, data ->
-//                    Text(
-//                        text = "ID: ${data.id}, Timestamp: ${data.timestamp}, " +
-//                                "Roll: ${data.roll}, Pitch: ${data.pitch}, Yaw: ${data.yaw}",
-//                        modifier = Modifier.padding(8.dp)
-//                    )
-//                }
-//            }
-//        }
-//    }
-//}
-
-
 
