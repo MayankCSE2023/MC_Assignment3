@@ -41,7 +41,7 @@ fun OrientationApp() {
         OrientationDisplay(viewModel.orientationData.value)
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = { context.startActivity(Intent(context, DataActivity::class.java)) }) {
-            Text(text = "View Saved Data")
+            Text(text = "Show Graph")
         }
     }
 }
